@@ -7,7 +7,6 @@ void duplicates_finder::add_file_info(QFileInfo const& file_info) {
     size_collisions[file_info.size()].push_back(file_info);
 }
 
-
 void duplicates_finder::find_duplciates(QString const& dir) {
     size_collisions.clear();
     alive = true;

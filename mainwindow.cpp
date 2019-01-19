@@ -43,6 +43,7 @@ main_window::~main_window() {
    emit killed();
    future.waitForFinished();
 }
+
 namespace  {
     QString get_readable_file_size(qint64 size) {
         if (size == 0) {

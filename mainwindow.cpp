@@ -44,20 +44,18 @@ main_window::~main_window() {
    future.waitForFinished();
 }
 
-namespace  {
-    QString get_readable_file_size(qint64 size) {
-        if (size == 0) {
-            return "0";
-        }
-        const static QString names[] = {"B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB"};
-        int cnt = 0;
-        double d_size = size;
-        while (d_size >= 1024) {
-            d_size /= 1024;
-            cnt++;
-        }
-        return QString::number(d_size, 'f', 2) + " " + names[cnt];
+QString main_window::get_readable_file_size(qint64 size) {
+    if (size == 0) {
+        return "0";
     }
+    const static QString names[] = {"B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB"};
+    int cnt = 0;
+    double d_size = size;
+    while (d_size >= 1024) {
+        d_size /= 1024;
+        cnt++;
+    }
+    return QString::number(d_size, 'f', 2) + " " + names[cnt];
 }
 
 void main_window::scan_directory() {

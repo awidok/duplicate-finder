@@ -32,6 +32,7 @@ private:
     QString current_dir;
     duplicates_finder fnd;
     QFuture<void> future;
+    QString get_readable_file_size(qint64 size);
 };
 
 #endif // MAINWINDOW_H

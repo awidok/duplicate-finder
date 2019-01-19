@@ -23,7 +23,7 @@ void duplicates_finder::find_duplciates(QString const& dir) {
         }
         if (file_group.size() > 1) {
             full_size += file_group.first().size() * file_group.size();
-             possible_duplciates.append(file_group);
+            possible_duplciates.append(file_group);
         }
     }
     if (full_size == 0) {

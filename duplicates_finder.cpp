@@ -16,12 +16,15 @@ void duplicates_finder::find_duplciates(QString const& dir) {
         return;
     }
     qint64 full_size = 0;
-    for (auto it : size_collisions) {
+    qint64 current_size = 0;
+    QList<QFileInfoList> possible_duplciates;
+    for (auto file_group : size_collisions) {
         if (!alive) {
             return;
         }
-        if (it.size() > 1) {
-            full_size += it.first().size() * it.size();
+        if (file_group.size() > 1) {
+            full_size += file_group.first().size() * file_group.size();
+             possible_duplciates.append(file_group);
         }
     }
     if (full_size == 0) {
@@ -29,23 +32,13 @@ void duplicates_finder::find_duplciates(QString const& dir) {
         emit progress_changed(100);
         return;
     }
-    qint64 current_size = 0;
-    QList<QFileInfoList> possible_duplciates;
-    for (auto const& it : size_collisions) {
-        if (!alive) {
-            return;
-        }
-        if (it.size() > 1) {
-            possible_duplciates.append(it);
-        }
-    }
     std::sort(possible_duplciates.begin(), possible_duplciates.end(), [](QFileInfoList const& a, QFileInfoList const& b) {return a.first().size() > b.first().size();});
-    for (auto const& it : possible_duplciates) {
+    for (auto const& file_group : possible_duplciates) {
         if (!alive) {
             return;
         }
         QHash<QByteArray, QFileInfoList> hash_collisions;
-        for (auto const& file_info : it) {
+        for (auto const& file_info : file_group) {
             if (!alive) {
                 return;
             }
